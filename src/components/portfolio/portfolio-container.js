@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import PortfolioItem from './portfolio-items';
 
@@ -15,14 +16,26 @@ export default class PortfolioContainer extends Component {
                 {"title": "turo", category: "Car Rental", slug: 'turo'}
             ]
         };
-
+        
         this.handleFilter = this.handleFilter.bind(this);
+        // this was all added just to test the axios library. Below is pulling a get request on how to pull live data back via an api call. We have to bind the getPortfolioItems function to the "this" so that it is able to be called within the render function and pulled into our app.
+        this.getPortfolioItems = this.getPortfolioItems.bind(this);
     }
 
     portfolioItems() {
         return this.state.data.map(item => {
             return <PortfolioItem title={item.title} url={"google.com"} slug={item.slug}/>// props
         });
+    }
+
+    getPortfolioItems() {
+        axios.get('https://anthonygallegos.devcamp.space/portfolio/portfolio_items')
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
     }
 
     // using the filter function to filter over the data elements that are in the intial state we are able to group the data by its category and render/set a new state of just those items
@@ -39,6 +52,7 @@ export default class PortfolioContainer extends Component {
             return <div>Is Loading...</div>
         };
 
+        this.getPortfolioItems();
         return (
             <div>
             <h1>{this.state.pageTitle}</h1>
