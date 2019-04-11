@@ -42,8 +42,8 @@ export default class PortfolioContainer extends Component {
 
     portfolioItems() {
         return this.state.data.map(item => {
-            console.log("item data", item);
-            return <PortfolioItem key={item.id} title={item.name} url={item.url} slug={item.id}/>// props
+            // console.log("PortfolioItem", item) this syntax allows you to output the data in the console log in the browser so we are able to see what kind of data we have access too that is coming in from an API, this is used if we don't know the type of data that is getting pulled in.
+            return <PortfolioItem key={item.id} item={item}/>// props
         });
     }
 
