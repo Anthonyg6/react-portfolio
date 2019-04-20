@@ -51,8 +51,7 @@ export default class Login extends Component {
       <div>
         <h1>LOGIN TO ACCESS DASHBOARD</h1>
 
-        <div>{this.state.errorText}</div>
-
+        <div>{this.state.errorText}</div>``
         <form onSubmit={this.handleSubmit}>
             <input
                 type="email"
