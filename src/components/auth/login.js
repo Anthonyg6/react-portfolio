@@ -31,16 +31,18 @@ export default class Login extends Component {
         {withCredentials: true}
     ).then(response => {
         if (response.data.status === "created") {
-            console.log("You are in!")
+            this.props.handleSuccessfulAuth()
         } else {
             this.setState({
                 errorText: "You have passed in the wrong email and/or password"
             })
+            this.props.handleUnSucessfulAuth()
         }
     }).catch(error => {
         this.setState({
             errorText: "Some error has occured"
         })
+        this.props.handleUnSucessfulAuth()
     });
         event.preventDefault();
         
@@ -51,7 +53,7 @@ export default class Login extends Component {
       <div>
         <h1>LOGIN TO ACCESS DASHBOARD</h1>
 
-        <div>{this.state.errorText}</div>``
+        <div>{this.state.errorText}</div>
         <form onSubmit={this.handleSubmit}>
             <input
                 type="email"

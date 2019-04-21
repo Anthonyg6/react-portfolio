@@ -41,6 +41,7 @@ export default class App extends Component {
           <div>
             <NavigationContainer/>
 
+            <h1>{this.state.loggedInStatus}</h1>
             <Switch>
               <Route exact path="/" component={Home} />
               <Route path="/About-me" component={About} />
@@ -66,4 +67,4 @@ export default class App extends Component {
       </div>
     );
   }
-}
+} 
