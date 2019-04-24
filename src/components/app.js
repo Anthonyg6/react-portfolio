@@ -21,6 +21,7 @@ export default class App extends Component {
 
     this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
     this.handleUnSuccessfulLogin = this.handleUnSuccessfulLogin.bind(this);
+    this.handleUnSuccessfulLogin = this.handleUnSuccessfulLogin.bind(this)
   }
 
   handleSuccessfulLogin() {
@@ -30,6 +31,12 @@ export default class App extends Component {
   }
 
   handleUnSuccessfulLogin() {
+    this.setState({
+      loggedInStatus: "NOT_LOGGED_IN"
+    })
+  }
+
+  handleSuccessLogout() {
     this.setState({
       loggedInStatus: "NOT_LOGGED_IN"
     })
@@ -58,12 +65,19 @@ export default class App extends Component {
   componentDidMount() {
     this.checkLoggedInStatus()
   }
+
+  authorizedPages() {
+    return [<Route path="/Blog" component={Blog} />];
+  }
   render() {
     return (
       <div className='container'>
         <Router>
           <div>
-            <NavigationContainer/>
+            <NavigationContainer
+            loggedInStatus = {this.state.loggedInStatus}
+            handleUnSuccessfulLogin = {this.state.handleUnSuccessfulLogin}
+            />
 
             <h1>{this.state.loggedInStatus}</h1>
             <Switch>
@@ -82,7 +96,10 @@ export default class App extends Component {
               />
 
               <Route path="/Contact" component={Contact} />
-              <Route path="/Blog" component={Blog} />
+              {this.state.loggedInStatus === "LOGGED_IN" ? (
+                this.authorizedPages()
+              ) : null}
+
               <Route exact path="/portfolio/:slug" component={PortfolioDetail} />
               <Route component={NoMatch} />
             </Switch>
