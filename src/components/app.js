@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import NavigationContainer from './navigation/navigation-container';
+import NavigationComponent from './navigation/navigation-container';
 import Home from './pages/home';
 import About from './pages/about';
 import Contact from './pages/contact';
@@ -21,7 +21,7 @@ export default class App extends Component {
 
     this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
     this.handleUnSuccessfulLogin = this.handleUnSuccessfulLogin.bind(this);
-    this.handleUnSuccessfulLogin = this.handleUnSuccessfulLogin.bind(this)
+    this.handleSuccessfulLogout = this.handleSuccessfulLogout.bind(this)
   }
 
   handleSuccessfulLogin() {
@@ -36,7 +36,7 @@ export default class App extends Component {
     })
   }
 
-  handleSuccessLogout() {
+  handleSuccessfulLogout() {
     this.setState({
       loggedInStatus: "NOT_LOGGED_IN"
     })
@@ -74,9 +74,9 @@ export default class App extends Component {
       <div className='container'>
         <Router>
           <div>
-            <NavigationContainer
+            <NavigationComponent
             loggedInStatus = {this.state.loggedInStatus}
-            handleUnSuccessfulLogin = {this.state.handleUnSuccessfulLogin}
+            handleSuccessfulLogout = {this.state.handleSuccessfulLogout}
             />
 
             <h1>{this.state.loggedInStatus}</h1>
