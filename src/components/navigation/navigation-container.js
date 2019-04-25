@@ -1,31 +1,31 @@
 import React from 'react';
 import axios from 'axios';
-import { withRouter } from 'react-router';
+import { withRouter } from "react-router"
 import { NavLink } from 'react-router-dom';
 
-const dynamicLink = (route, linkText) =>{
-    return (
-        <div className = "nav-link-wrapper">
-            <NavLink to="/blog" activeClassName="nav-link-active">Blog</NavLink>
-        </div>
-    )
-}
-
-const handleLogout = () => {
-    axios.delete("https://api.devcamp.space/logout", {withCredentials:true})
-    .then(response => {
-        if (response.status === 200) {
-            props.history.push("/"); //this is for some reason not working? Re watch this video and double check.
-            props.handleSuccessfulLogout();
-        }
-        return response.data;
-    })
-    .catch(error => {
-        console.log("error in logging out", error)
-    });
-};
-
 const NavigationContainer = (props) => {
+    const dynamicLink = (route, linkText) =>{
+        return (
+            <div className = "nav-link-wrapper">
+                <NavLink to="/blog" activeClassName="nav-link-active">Blog</NavLink>
+            </div>
+        )
+    }
+    
+    const handleSignOut = () => {
+        axios.delete("https://api.devcamp.space/logout", {withCredentials:true})
+        .then(response => {
+            if (response.status === 200) {
+                props.history.push("/"); //this is for some reason not working? Re watch this video and double check.
+                props.handleSuccessfulLogout();
+            }
+            return response.data;
+        })
+        .catch(error => {
+            console.log("Error signing out", error)
+        });
+    };
+
     return (
         <div className = "nav-wrapper">
             <div className = "left-side">
@@ -43,8 +43,10 @@ const NavigationContainer = (props) => {
             </div>
 
             <div className ="right-side">
-            Anthony Gallegos
-            {props.loggedInStatus === "LOGGED_IN" ? (<a onClick={handleLogout}>Sign Out</a>) : null}
+                Anthony Gallegos
+                {props.loggedInStatus === "LOGGED_IN" ? (
+                    <a onClick={handleSignOut}>Sign Out</a>
+                ) : null}
             </div>
         </div>
     );
