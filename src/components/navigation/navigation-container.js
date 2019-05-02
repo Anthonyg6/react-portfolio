@@ -7,7 +7,7 @@ const NavigationContainer = (props) => {
     const dynamicLink = (route, linkText) =>{
         return (
             <div className = "nav-link-wrapper">
-                <NavLink to="/blog" activeClassName="nav-link-active">Blog</NavLink>
+                <NavLink to={route} activeClassName="nav-link-active">{linkText}</NavLink>
             </div>
         )
     }
@@ -16,7 +16,7 @@ const NavigationContainer = (props) => {
         axios.delete("https://api.devcamp.space/logout", {withCredentials:true})
         .then(response => {
             if (response.status === 200) {
-                props.history.push("/"); //this is for some reason not working? Re watch this video and double check.
+                props.history.push("/");
                 props.handleSuccessfulLogout();
             }
             return response.data;
@@ -38,8 +38,11 @@ const NavigationContainer = (props) => {
                 <div className = "nav-link-wrapper">
                     <NavLink to="/contact" activeClassName="nav-link-active">Contact</NavLink>
                 </div>
+                <div className = "nav-link-wrapper">
+                    <NavLink to="/blog" activeClassName="nav-link-active">Blog</NavLink>
+                </div>
 
-                {props.loggedInStatus ===  "LOGGED_IN" ? dynamicLink('/blog', 'Blog') : null}
+                {props.loggedInStatus ===  "LOGGED_IN" ? dynamicLink('/PortfolioManager', 'Portfolio Manager') : null}
             </div>
 
             <div className ="right-side">
