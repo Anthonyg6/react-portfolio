@@ -39,7 +39,6 @@ export default class PortfolioForm extends Component {
 
     handleSubmit(event) {
         this.buildForm();
-        console.log(event, "event")
         event.preventDefault();
     }
 
