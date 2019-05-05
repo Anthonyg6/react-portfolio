@@ -10,7 +10,7 @@ export default class PortfolioForm extends Component {
             "description": "",
             "url": "",
             "position":"",
-            "category": "",
+            "category": "Social Media",
             "thumb_image": "",
             "banner_image": "",
             "logo": ""
@@ -89,7 +89,7 @@ export default class PortfolioForm extends Component {
                 </select>
             </div>
             <div>
-                <input
+                <textarea
                     type="text"
                     name="description"
                     placeholder="description"
