@@ -20,4 +20,8 @@ textarea {
     overflow: hidden;
     background-color: transparent;
     outline: none;
+    &:focus {
+        outline: none;
+        border: 1px solid $teal;
+    }
 }
