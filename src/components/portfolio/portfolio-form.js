@@ -23,13 +23,17 @@ export default class PortfolioForm extends Component {
         this.handleSubmit = this.handleSubmit.bind(this)
         this.componentConfig = this.componentConfig.bind(this);
         this.djsConfig = this.djsConfig.bind(this);
-        this.handleImageDrop = this.handleImageDrop.bind(this);
+        this.handleThumbDrop = this.handleThumbDrop.bind(this);
         this.handleBannerDrop = this.handleBannerDrop.bind(this);
         this.handleLogoDrop = this.handleLogoDrop.bind(this);
+
+        this.thumbRef = React.createRef();
+        this.bannerRef = React.createRef();
+        this.logoRef = React.createRef();
         
     };
 
-    handleImageDrop() {
+    handleThumbDrop() {
         return {
             addedfile: file => this.setState({thumb_image: file}) 
         }
@@ -95,6 +99,21 @@ export default class PortfolioForm extends Component {
         axios.post("https://anthonygallegos.devcamp.space/portfolio/portfolio_items",this.buildForm(), {withCredentials: true})
             .then(response => {
                 this.props.handleSuccessfulFormSubmission(response.data.portfolio_item)
+
+                this.setState({
+                    "name": "",
+                    "description": "",
+                    "url": "",
+                    "position":"",
+                    "category": "Social Media",
+                    "thumb_image": "",
+                    "banner_image": "",
+                    "logo": ""
+                });
+                // we are using a forEach function to simply just itterate over each item and to do so all the refs are wrapped up in an array. This gives the ability to dynamically clear each ref of its data together instead of breaking up each into its own set of code
+                [this.thumbRef, this.bannerRef, this.logoRef].forEach(ref => {
+                    ref.current.dropzone.removeAllFiles();
+                });
             }).catch(error => {
                 console.log("Error with handleSubmit function", error)
             })
@@ -152,16 +171,19 @@ export default class PortfolioForm extends Component {
             </div>
             <div className="image-uploader">
                 <DropzoneComponent
+                    ref={this.thumbRef}
                     config={this.componentConfig()}
                     djsConfig={this.djsConfig()}
-                    eventHandlers={this.handleImageDrop()}
+                    eventHandlers={this.handleThumbDrop()}
                 />
                 <DropzoneComponent
+                    ref={this.bannerRef}
                     config={this.componentConfig()}
                     djsConfig={this.djsConfig()}
                     eventHandlers={this.handleBannerDrop()}
                 />
                 <DropzoneComponent
+                    ref={this.logoRef}
                     config={this.componentConfig()}
                     djsConfig={this.djsConfig()}
                     eventHandlers={this.handleLogoDrop()}
