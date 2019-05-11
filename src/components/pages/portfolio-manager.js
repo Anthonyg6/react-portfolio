@@ -7,15 +7,17 @@ import PortfolioForm from '../portfolio/portfolio-form';
 
 export default class PortfolioManager extends Component {
     constructor() {
-        super()
+        super();
 
         this.state = {
-            portfolioItems: []
-        }
+            portfolioItems: [],
+            portfolioItemToEdit: {}
+        };
 
         this.handleSuccessfulFormSubmission = this.handleSuccessfulFormSubmission.bind(this);
         this.handleFormError = this.handleFormError.bind(this);
         this.handleDeleteClick = this.handleDeleteClick.bind(this);
+        this.handleEditClick = this.handleEditClick.bind(this);
     }
 
    getPortfolioManagerItems() {
@@ -38,6 +40,12 @@ export default class PortfolioManager extends Component {
 
     handleFormError(error) {
         console.log("handleFormError error", error)
+    }
+
+    handleEditClick(portfolioItem) {
+        this.setState({
+            portfolioItemToEdit: portfolioItem
+        });
     }
 
     handleDeleteClick(portfolioItem) {
@@ -70,6 +78,7 @@ export default class PortfolioManager extends Component {
         </div>
         <div className="right-column">
             <PortfolioSideBar
+            handleEditClick={this.handleEditClick}
             handleDeleteClick={this.handleDeleteClick}
             data={this.state.portfolioItems} />
         </div>
