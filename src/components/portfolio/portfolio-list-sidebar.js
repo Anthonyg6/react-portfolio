@@ -8,6 +8,7 @@ const PortfolioSideBar = (props) => {
                 <div className="portfolio-thumb-img">
                     <img src={portfolioItem.thumb_image_url} />
                 </div>
+                
                 <div className="text-area">
                     <div className="title">{portfolioItem.name}</div>
                     <a className="delete-icon" onClick={() => props.handleDeleteClick(portfolioItem)}>
