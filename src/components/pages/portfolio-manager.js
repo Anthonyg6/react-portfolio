@@ -18,7 +18,14 @@ export default class PortfolioManager extends Component {
         this.handleFormError = this.handleFormError.bind(this);
         this.handleDeleteClick = this.handleDeleteClick.bind(this);
         this.handleEditClick = this.handleEditClick.bind(this);
+        this.clearPortfolioToEdit = this.clearPortfolioToEdit.bind(this);
     }
+
+    clearPortfolioToEdit() {
+        this.setState({
+            portfolioItemToEdit: {}
+        })
+    } 
 
    getPortfolioManagerItems() {
         axios.get('https://anthonygallegos.devcamp.space/portfolio/portfolio_items?order_by=created_at&direction=desc', {withCredentials: true})
@@ -35,11 +42,11 @@ export default class PortfolioManager extends Component {
     handleSuccessfulFormSubmission(portfolioItem) {
         this.setState({
             portfolioItems: [portfolioItem].concat(this.state.portfolioItems)
-        })
+        });
     }
 
     handleFormError(error) {
-        console.log("handleFormError error", error)
+        console.log("handleFormError error", error);
     }
 
     handleEditClick(portfolioItem) {
@@ -56,7 +63,7 @@ export default class PortfolioManager extends Component {
                 portfolioItems: this.state.portfolioItems.filter(item => {
                    return item.id !== portfolioItem.id
                 })
-            })
+            });
             return response.data;
         }).catch(error => {
             console.log("handleDeleteClick", error)
@@ -74,6 +81,9 @@ export default class PortfolioManager extends Component {
             <PortfolioForm
             handleSuccessfulFormSubmission = {this.handleSuccessfulFormSubmission}
             handleFormError = {this.handleFormError}
+            //changes
+            clearPortfolioToEdit ={this.clearPortfolioToEdit}
+            portfolioItemToEdit={this.state.portfolioItemToEdit}
             />
         </div>
         <div className="right-column">

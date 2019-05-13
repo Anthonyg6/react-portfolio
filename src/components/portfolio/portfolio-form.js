@@ -33,6 +33,30 @@ export default class PortfolioForm extends Component {
         
     };
 
+    componentDidUpdate() {
+        if(Object.keys(this.props.portfolioItemToEdit).length > 0) {
+            const {
+                id,
+                name,
+                description,
+                category,
+                position,
+                url,
+            } = this.props.portfolioItemToEdit;
+
+            this.props.clearPortfolioToEdit();
+
+            this.setState({
+                "id": id,
+                "name": name || "",
+                "description": description || "",
+                "url": url || "",
+                "position": position || "",
+                "category": category || "Social Media"
+            });
+        }
+    }
+
     handleThumbDrop() {
         return {
             addedfile: file => this.setState({thumb_image: file}) 
