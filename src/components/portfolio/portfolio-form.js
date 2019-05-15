@@ -10,15 +10,19 @@ export default class PortfolioForm extends Component {
         super(props)
 
         this.state = {
-            "name": "",
-            "description": "",
-            "url": "",
-            "position":"",
-            "category": "Social Media",
-            "thumb_image": "",
-            "banner_image": "",
-            "logo": ""
-        }
+            name: "",
+            description: "",
+            url: "",
+            position:"",
+            category: "Social Media",
+            thumb_image: "",
+            banner_image: "",
+            logo: "",
+            editMode: false,
+            apiUrl: "https://anthonygallegos.devcamp.space/portfolio/portfolio_items",
+            apiAction: 'post'
+        }; 
+
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this)
         this.componentConfig = this.componentConfig.bind(this);
@@ -42,17 +46,23 @@ export default class PortfolioForm extends Component {
                 category,
                 position,
                 url,
+                thumb_image_url,
+                banner_image_url,
+                logo_url
             } = this.props.portfolioItemToEdit;
 
             this.props.clearPortfolioToEdit();
 
             this.setState({
-                "id": id,
-                "name": name || "",
-                "description": description || "",
-                "url": url || "",
-                "position": position || "",
-                "category": category || "Social Media"
+                id: id,
+                name: name || "",
+                description: description || "",
+                category: category || "",
+                position: position || "",
+                url: url || "",
+                editMode: true,
+                apiUrl: `https://anthonygallegos.devcamp.space/portfolio/portfolio_items/${id}`,
+                apiAction: "patch",
             });
         }
     }
@@ -120,27 +130,31 @@ export default class PortfolioForm extends Component {
     };
 
     handleSubmit(event) {
-        axios.post("https://anthonygallegos.devcamp.space/portfolio/portfolio_items",this.buildForm(), {withCredentials: true})
-            .then(response => {
-                this.props.handleSuccessfulFormSubmission(response.data.portfolio_item)
+        axios({
+            method: this.state.apiAction,
+            url: this.state.apiUrl,
+            data: this.buildForm(),
+            withCredentials: true
+        }) .then(response => {
+            this.props.handleSuccessfulFormSubmission(response.data.portfolio_item);
 
-                this.setState({
-                    "name": "",
-                    "description": "",
-                    "url": "",
-                    "position":"",
-                    "category": "Social Media",
-                    "thumb_image": "",
-                    "banner_image": "",
-                    "logo": ""
-                });
-                // we are using a forEach function to simply just itterate over each item and to do so all the refs are wrapped up in an array. This gives the ability to dynamically clear each ref of its data together instead of breaking up each into its own set of code
-                [this.thumbRef, this.bannerRef, this.logoRef].forEach(ref => {
-                    ref.current.dropzone.removeAllFiles();
-                });
-            }).catch(error => {
-                console.log("Error with handleSubmit function", error)
-            })
+            this.setState({
+                name: "",
+                description: "",
+                url: "",
+                position:"",
+                category: "Social Media",
+                thumb_image: "",
+                banner_image: "",
+                logo: ""
+            });
+            // we are using a forEach function to simply just itterate over each item and to do so all the refs are wrapped up in an array. This gives the ability to dynamically clear each ref of its data together instead of breaking up each into its own set of code
+            [this.thumbRef, this.bannerRef, this.logoRef].forEach(ref => {
+                ref.current.dropzone.removeAllFiles();
+            });
+        }).catch(error => {
+            console.log("Error with handleSubmit function", error)
+        })
         event.preventDefault();
     };
 
