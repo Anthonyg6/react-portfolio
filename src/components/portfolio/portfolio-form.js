@@ -35,7 +35,7 @@ export default class PortfolioForm extends Component {
         this.bannerRef = React.createRef();
         this.logoRef = React.createRef();
         
-    };
+    }
 
     componentDidUpdate() {
         if(Object.keys(this.props.portfolioItemToEdit).length > 0) {
@@ -70,35 +70,35 @@ export default class PortfolioForm extends Component {
     handleThumbDrop() {
         return {
             addedfile: file => this.setState({thumb_image: file}) 
-        }
-    };
+        };
+    }
 
     handleBannerDrop() {
         return {
             addedfile: file => this.setState({banner_image: file})
-        }
-    };
+        };
+    }
 
     handleLogoDrop() {
         return {
             addedfile: file => this.setState({logo: file})
-        }
-    };
+        };
+    }
 
     componentConfig() {
         return {
             iconFiletypes:[".jpg", ".png"],
             showFiletypeIcon: true,
             postUrl: "https://httpbin.org/post"
-        }
-    };
+        };
+    }
 
     djsConfig() {
         return {
             addRemoveLinks:true,
             maxFiles: 1
-        }
-    };
+        };
+    }
 
 
 
@@ -121,13 +121,13 @@ export default class PortfolioForm extends Component {
             formData.append("portfolio_item[logo]", this.state.logo);
         }
         return formData;
-    };
+    }
 
     handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value
-        })
-    };
+        });
+    }
 
     handleSubmit(event) {
         axios({
@@ -136,7 +136,11 @@ export default class PortfolioForm extends Component {
             data: this.buildForm(),
             withCredentials: true
         }) .then(response => {
-            this.props.handleSuccessfulFormSubmission(response.data.portfolio_item);
+            if(this.state.editMode) {
+                this.props.handleEditFormSubmission();
+            } else {
+                this.props.handleNewFormSubmission(response.data.portfolio_item);
+            }
 
             this.setState({
                 name: "",
@@ -146,7 +150,10 @@ export default class PortfolioForm extends Component {
                 category: "Social Media",
                 thumb_image: "",
                 banner_image: "",
-                logo: ""
+                logo: "",
+                editMode: false,
+                apiUrl: "https://anthonygallegos.devcamp.space/portfolio/portfolio_items",
+                apiAction: 'post'
             });
             // we are using a forEach function to simply just itterate over each item and to do so all the refs are wrapped up in an array. This gives the ability to dynamically clear each ref of its data together instead of breaking up each into its own set of code
             [this.thumbRef, this.bannerRef, this.logoRef].forEach(ref => {
