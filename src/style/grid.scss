@@ -19,5 +19,15 @@
             object-fit: cover;
             border-radius: 3px;
         }
+
+        .dropzone-link-remove {
+            display: flex;
+            justify-content: center;
+            a {
+                font-size: 25px;
+                color: red;
+                cursor: pointer;
+            }
+        }
     }
 }

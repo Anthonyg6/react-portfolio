@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import DropzoneComponent from 'react-dropzone-component';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import "../../../node_modules/react-dropzone-component/styles/filepicker.css";
 import "../../../node_modules/dropzone/dist/min/dropzone.min.css";
@@ -30,6 +31,7 @@ export default class PortfolioForm extends Component {
         this.handleThumbDrop = this.handleThumbDrop.bind(this);
         this.handleBannerDrop = this.handleBannerDrop.bind(this);
         this.handleLogoDrop = this.handleLogoDrop.bind(this);
+        this.handleDeleteImage = this.handleDeleteImage.bind(this);
 
         this.thumbRef = React.createRef();
         this.bannerRef = React.createRef();
@@ -68,6 +70,10 @@ export default class PortfolioForm extends Component {
                 logo: logo_url || ""
             });
         }
+    }
+
+    handleDeleteImage(ImageType) {
+        console.log("image type", ImageType);
     }
 
     handleThumbDrop() {
@@ -221,6 +227,12 @@ export default class PortfolioForm extends Component {
                 {this.state.thumb_image && this.state.editMode ?
                     <div className ="dropzone-img-wrapper">
                         <img src={this.state.thumb_image} />
+
+                        <div className = "dropzone-link-remove">
+                            <a onClick={() => this.handleDeleteImage("thumb_image")}>
+                                <FontAwesomeIcon icon="minus-circle" />
+                            </a>
+                        </div>
                     </div>
                     :
                     <DropzoneComponent
@@ -237,6 +249,12 @@ export default class PortfolioForm extends Component {
                 {this.state.banner_image && this.state.editMode ?
                     <div className="dropzone-img-wrapper">
                         <img src={this.state.banner_image} />
+
+                        <div className = "dropzone-link-remove">
+                            <a onClick={() => this.handleDeleteImage("banner_image")}>
+                                <FontAwesomeIcon icon="minus-circle" />
+                            </a>
+                        </div>
                     </div>
                     :
                     <DropzoneComponent
@@ -253,6 +271,11 @@ export default class PortfolioForm extends Component {
                 {this.state.logo && this.state.editMode ?
                     <div className ="dropzone-img-wrapper">
                         <img src={this.state.logo} />
+                        <div className = "dropzone-link-remove">
+                            <a onClick={() => this.handleDeleteImage("logo")}>
+                                <FontAwesomeIcon icon="minus-circle" />
+                            </a>
+                        </div>
                     </div>
                     :
                     <DropzoneComponent
