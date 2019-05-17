@@ -73,7 +73,15 @@ export default class PortfolioForm extends Component {
     }
 
     handleDeleteImage(ImageType) {
-        console.log("image type", ImageType);
+        axios.delete(`https://api.devcamp.space/portfolio/delete-portfolio-image/${this.state.id}?image_type=${ImageType}`,
+            {withCredentials: true}
+        ).then(response => {
+            this.setState({
+                [`${ImageType}_url`]: ""
+            });
+        }).catch(error => {
+            console.log("handleDeleteImage", error)
+        })
     }
 
     handleThumbDrop() {
