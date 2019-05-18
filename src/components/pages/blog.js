@@ -30,12 +30,12 @@ export default class Blog extends Component {
   }
 
   render() {
+    const blogRecord = this.state.blogItems.map(blogItem => {
+      return <h1>{blogItem.title}</h1>
+    })
     return (
       <div>
-        <h2>Blog</h2>
-        <div>
-          <Link to="/about-me">Read more about me</Link>
-        </div>
+        {blogRecord}
       </div>
     );
   }
