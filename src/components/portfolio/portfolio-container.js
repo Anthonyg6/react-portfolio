@@ -60,8 +60,9 @@ export default class PortfolioContainer extends Component {
             /* we have to use an annoymous function when using this click handler because we have to pass an argument to our handleFilter function & if we do no pass it in as annoymous the app will attempt to run all of the functions at the same time, by doing this we tell the app to not run the functions until the button is clicked.*/
             <div className="portfolio-items-wrapper">
                 <button className="btn" onClick={()=>this.handleFilter("Social Media")}>Social Media</button>
-                <button className="btn" onClick={()=>this.handleFilter("Automotive")}>Car Rental</button>
+                <button className="btn" onClick={()=>this.handleFilter("Automotive")}>Automotive</button>
                 <button className="btn" onClick={()=>this.handleFilter("Search Engine")}>Search Engine</button>
+                <button className="btn" onClick={()=>this.handleFilter("Game")}>Game</button>
                 {this.portfolioItems()}
             </div>
             
