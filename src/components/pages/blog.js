@@ -17,7 +17,12 @@ export default class Blog extends Component {
 
   activateScroll() {
     window.onscroll = () => {
-      console.log("activateScroll");
+      if (
+        window.innerHeight + document.documentElement.scrollTop ===
+        document.documentElement.offsetHeight
+      ) {
+        console.log("get more posts");
+      }
     };
   }
 
