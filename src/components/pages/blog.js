@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 import BlogItem from "../blog/blog-item";
 
 export default class Blog extends Component {
@@ -12,18 +12,28 @@ export default class Blog extends Component {
     };
 
     this.getBlogItems = this.getBlogItems.bind(this);
+    this.activateScroll();
+  }
+
+  activateScroll() {
+    window.onscroll = () => {
+      console.log("activateScroll");
+    };
   }
 
   getBlogItems() {
-    axios.get("https://anthonygallegos.devcamp.space/portfolio/portfolio_blogs",
-      { withCredentials: true
-    }).then(response => {
-      this.setState({
-        blogItems: response.data.portfolio_blogs
+    axios
+      .get("https://anthonygallegos.devcamp.space/portfolio/portfolio_blogs", {
+        withCredentials: true
+      })
+      .then(response => {
+        this.setState({
+          blogItems: response.data.portfolio_blogs
+        });
+      })
+      .catch(error => {
+        console.log("getBlogItems error", error);
       });
-    }).catch(error => {
-      console.log("getBlogItems error", error);
-    });
   }
 
   componentWillMount() {
@@ -32,11 +42,11 @@ export default class Blog extends Component {
 
   render() {
     const blogRecord = this.state.blogItems.map(blogItem => {
-      return <BlogItem key={blogItem.id} blogItem={blogItem} />
+      return <BlogItem key={blogItem.id} blogItem={blogItem} />;
     });
     return (
-      <div>
-        {blogRecord}
+      <div className="blog-container-wrapper">
+        <div className="content-wrapper">{blogRecord}</div>
       </div>
     );
   }
