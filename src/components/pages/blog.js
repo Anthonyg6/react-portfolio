@@ -22,10 +22,18 @@ export default class Blog extends Component {
   activateScroll() {
     window.onscroll = () => {
       if (
+        // the this.state.isLoading || is used if the user has slow internet or if they attempt to scroll before the content is fully loaded it will not began to run any of the code until the page is OUT of the isLoading state
+        this.state.isLoading ||
+        this.state.blogItems.length === this.state.totalCount
+      ) {
+        return;
+      }
+
+      if (
         window.innerHeight + document.documentElement.scrollTop ===
         document.documentElement.offsetHeight
       ) {
-        console.log("get more posts");
+        this.getBlogItems();
       }
     };
   }
@@ -35,12 +43,18 @@ export default class Blog extends Component {
       currentPage: this.state.currentPage + 1
     });
     axios
-      .get("https://anthonygallegos.devcamp.space/portfolio/portfolio_blogs", {
-        withCredentials: true
-      })
+      .get(
+        `https://anthonygallegos.devcamp.space/portfolio/portfolio_blogs?page=${
+          this.state.currentPage
+        }`,
+        {
+          withCredentials: true
+        }
+      )
       .then(response => {
+        console.log("getting", response);
         this.setState({
-          blogItems: response.data.portfolio_blogs,
+          blogItems: this.state.blogItems.concat(response.data.portfolio_blogs),
           totalCount: response.data.meta.total_records,
           isLoading: false
         });
