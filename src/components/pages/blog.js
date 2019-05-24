@@ -16,26 +16,25 @@ export default class Blog extends Component {
     };
 
     this.getBlogItems = this.getBlogItems.bind(this);
-    this.activateScroll();
+    this.onScroll = this.onScroll.bind(this);
+    window.addEventListener("scroll", this.onScroll, false);
   }
 
-  activateScroll() {
-    window.onscroll = () => {
-      if (
-        // the this.state.isLoading || is used if the user has slow internet or if they attempt to scroll before the content is fully loaded it will not began to run any of the code until the page is OUT of the isLoading state
-        this.state.isLoading ||
-        this.state.blogItems.length === this.state.totalCount
-      ) {
-        return;
-      }
+  onScroll() {
+    if (
+      // the this.state.isLoading || is used if the user has slow internet or if they attempt to scroll before the content is fully loaded it will not began to run any of the code until the page is OUT of the isLoading state
+      this.state.isLoading ||
+      this.state.blogItems.length === this.state.totalCount
+    ) {
+      return;
+    }
 
-      if (
-        window.innerHeight + document.documentElement.scrollTop ===
-        document.documentElement.offsetHeight
-      ) {
-        this.getBlogItems();
-      }
-    };
+    if (
+      window.innerHeight + document.documentElement.scrollTop ===
+      document.documentElement.offsetHeight
+    ) {
+      this.getBlogItems();
+    }
   }
 
   getBlogItems() {
@@ -54,6 +53,7 @@ export default class Blog extends Component {
       .then(response => {
         console.log("getting", response);
         this.setState({
+          //we are concating the current state of blog items with the new response once the bottom of the page is hit.
           blogItems: this.state.blogItems.concat(response.data.portfolio_blogs),
           totalCount: response.data.meta.total_records,
           isLoading: false
@@ -66,6 +66,10 @@ export default class Blog extends Component {
 
   componentWillMount() {
     this.getBlogItems();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.onScroll, false);
   }
 
   render() {
