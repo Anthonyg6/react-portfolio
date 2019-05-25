@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import BlogItem from "../blog/blog-item";
+import BlogModal from "../modals/blog-modals";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default class Blog extends Component {
@@ -78,6 +79,7 @@ export default class Blog extends Component {
     });
     return (
       <div className="blog-container-wrapper">
+        <BlogModal />
         <div className="content-wrapper">{blogRecord}</div>
         {this.state.isLoading === true ? (
           <div className="content-loader">
