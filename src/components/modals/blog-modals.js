@@ -8,7 +8,7 @@ export default class BlogModal extends Component {
   render() {
     return (
       <div>
-        <ReactModal isOpen={true}>
+        <ReactModal isOpen={this.props.modalIsOpen}>
           <h1>I am in a modal!!</h1>
         </ReactModal>
       </div>
