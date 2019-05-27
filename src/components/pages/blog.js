@@ -67,7 +67,7 @@ export default class Blog extends Component {
         }
       )
       .then(response => {
-        console.log("getting", response);
+        // console.log("getting", response); this will show the type of data that we are working with.
         this.setState({
           //we are concating the current state of blog items with the new response once the bottom of the page is hit.
           blogItems: this.state.blogItems.concat(response.data.portfolio_blogs),
