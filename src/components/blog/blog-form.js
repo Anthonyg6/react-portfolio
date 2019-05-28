@@ -31,7 +31,6 @@ export default class BlogForm extends Component {
         { withCredentials: true }
       )
       .then(response => {
-        console.log(response);
         this.props.handleSuccessfulFormSubmit(response.data.portfolio_blog);
 
         // check with mentor on why this causes a memory leak when attempting to set the state back to an empty string!!
@@ -54,24 +53,26 @@ export default class BlogForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleFormSubmit}>
-        <input
-          type="text"
-          name="title"
-          placeholder="Blog Title"
-          value={this.state.title}
-          onChange={this.handleChange}
-        />
+      <form onSubmit={this.handleFormSubmit} className="blog-form-wrapper">
+        <div className="two-column">
+          <input
+            type="text"
+            name="title"
+            placeholder="Blog Title"
+            value={this.state.title}
+            onChange={this.handleChange}
+          />
 
-        <input
-          type="text"
-          name="blog_status"
-          placeholder="Blog Status"
-          value={this.state.blog_status}
-          onChange={this.handleChange}
-        />
+          <input
+            type="text"
+            name="blog_status"
+            placeholder="Blog Status"
+            value={this.state.blog_status}
+            onChange={this.handleChange}
+          />
+        </div>
 
-        <button>Save</button>
+        <button className="btn">Save</button>
       </form>
     );
   }
