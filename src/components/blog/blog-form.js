@@ -7,7 +7,8 @@ export default class BlogForm extends Component {
 
     this.state = {
       title: "",
-      blog_status: ""
+      blog_status: "",
+      _isMounted: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -34,10 +35,10 @@ export default class BlogForm extends Component {
         this.props.handleSuccessfulFormSubmit(response.data.portfolio_blog);
 
         // check with mentor on why this causes a memory leak when attempting to set the state back to an empty string!!
-        // this.setState({
-        //   title: "",
-        //   blog_status: ""
-        // });
+        this.setState({
+          title: "",
+          blog_status: ""
+        });
       })
       .catch(error => {
         console.log("handleFormSubmit", error);

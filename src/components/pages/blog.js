@@ -77,7 +77,7 @@ export default class Blog extends Component {
         }
       )
       .then(response => {
-        console.log("getting", response); // this will show the type of data that we are working with.
+        console.log("getting", response.data); // this will show the type of data that we are working with.
         this.setState({
           //we are concating the current state of blog items with the new response once the bottom of the page is hit.
           blogItems: this.state.blogItems.concat(response.data.portfolio_blogs),
@@ -111,7 +111,9 @@ export default class Blog extends Component {
         />
 
         <div className="blog-link">
-          <a onClick={this.handleNewBlogClick}>Open a Modal!</a>
+          <a onClick={this.handleNewBlogClick}>
+            <FontAwesomeIcon icon="plus" />
+          </a>
         </div>
 
         <div className="content-wrapper">{blogRecord}</div>

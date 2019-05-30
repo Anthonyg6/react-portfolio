@@ -2,23 +2,43 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 
-  a {
-    color: $grey;
-    transition: 0.5s ease-in-out;
-    text-decoration: none;
-    &:hover {
-      color: $dark-teal;
-    }
+  .blog-link {
+    position: fixed;
+    right: 0;
+    bottom: 0;
 
-    h1 {
-      font-size: 1.5em;
+    a {
+      cursor: pointer;
+      color: $grey;
+      font-size: 2em;
+      margin-right: 80px;
+      margin-bottom: 40px;
+      transition: 0.5s ease-in-out;
+      &:hover {
+        color: $dark-teal;
+      }
     }
   }
   .content-wrapper {
     display: flex;
     flex-direction: column;
     width: 800px;
+
+    a {
+      color: $grey;
+      transition: 0.5s ease-in-out;
+      text-decoration: none;
+      &:hover {
+        color: $dark-teal;
+      }
+
+      h1 {
+        font-size: 1.5em;
+      }
+    }
+
     .featured-image-wrapper {
       img {
         margin: 15px 0px;
