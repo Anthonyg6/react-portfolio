@@ -9,11 +9,18 @@ export default class BlogForm extends Component {
     this.state = {
       title: "",
       blog_status: "",
-      _isMounted: false
+      content: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.handleRichTextEditorChange = this.handleRichTextEditorChange.bind(
+      this
+    );
+  }
+
+  handleRichTextEditorChange(content) {
+    this.setState({ content });
   }
 
   buildForm() {
@@ -75,7 +82,9 @@ export default class BlogForm extends Component {
         </div>
 
         <div className="one-column">
-          <RichTextEditors />
+          <RichTextEditors
+            handleRichTextEditorChange={this.handleRichTextEditorChange}
+          />
         </div>
 
         <button className="btn">Save</button>
