@@ -41,13 +41,13 @@ export default class BlogForm extends Component {
         { withCredentials: true }
       )
       .then(response => {
-        this.props.handleSuccessfulFormSubmit(response.data.portfolio_blog);
-
-        // check with mentor on why this causes a memory leak when attempting to set the state back to an empty string!!
         this.setState({
           title: "",
-          blog_status: ""
+          blog_status: "",
+          content: ""
         });
+
+        this.props.handleSuccessfulFormSubmit(response.data.portfolio_blog);
       })
       .catch(error => {
         console.log("handleFormSubmit", error);
