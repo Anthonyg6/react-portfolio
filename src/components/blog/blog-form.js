@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import RichTextEditors from "../forms/rich-text-editors";
-import Dropzone from "react-dropzone-component";
+import DropzoneComponent from "react-dropzone-component";
 
 export default class BlogForm extends Component {
   constructor(props) {
@@ -11,7 +11,7 @@ export default class BlogForm extends Component {
       title: "",
       blog_status: "",
       content: "",
-      featuredImage: ""
+      featured_image: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -22,6 +22,8 @@ export default class BlogForm extends Component {
     this.componentConfig = this.componentConfig.bind(this);
     this.djsConfig = this.djsConfig.bind(this);
     this.handleFeaturedImage = this.handleFeaturedImage.bind(this);
+
+    this.featuredImageRef = React.createRef();
   }
 
   componentConfig() {
@@ -41,7 +43,7 @@ export default class BlogForm extends Component {
 
   handleFeaturedImage() {
     return {
-      addedfile: file => this.setState({ featuredImage: file })
+      addedfile: file => this.setState({ featured_image: file })
     };
   }
 
@@ -56,6 +58,13 @@ export default class BlogForm extends Component {
     formData.append("portfolio_blog[blog_status]", this.state.blog_status);
     formData.append("portfolio_blog[content]", this.state.content);
 
+    if (this.state.featured_image) {
+      formData.append(
+        "portfolio_blog[featured_image]",
+        this.state.featured_image
+      );
+    }
+
     return formData;
   }
 
@@ -67,10 +76,15 @@ export default class BlogForm extends Component {
         { withCredentials: true }
       )
       .then(response => {
+        if (this.state.featured_image) {
+          this.featuredImageRef.current.dropzone.removeAllFiles();
+        }
+
         this.setState({
           title: "",
           blog_status: "",
-          content: ""
+          content: "",
+          featured_image: ""
         });
 
         this.props.handleSuccessfulFormSubmit(response.data.portfolio_blog);
@@ -115,13 +129,14 @@ export default class BlogForm extends Component {
         </div>
 
         <div className="image-uploader one-column">
-          <Dropzone
+          <DropzoneComponent
+            ref={this.featuredImageRef}
             config={this.componentConfig()}
             djsConfig={this.djsConfig()}
-            handleFeaturedImage={this.handleFeaturedImage()}
+            eventHandlers={this.handleFeaturedImage()}
           >
             <div className="dz-message">Featured Image</div>
-          </Dropzone>
+          </DropzoneComponent>
         </div>
 
         <button className="btn">Save</button>
