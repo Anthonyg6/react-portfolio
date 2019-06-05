@@ -19,7 +19,7 @@ export default class BlogModal extends Component {
         width: "800px"
       },
       overlay: {
-        backgroundColor: "rgba(1,1,1,0.65)"
+        backgroundColor: "rgba(1,1,1,0.75)"
       }
     };
 
