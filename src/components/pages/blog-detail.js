@@ -17,6 +17,16 @@ export default class BlogDetail extends Component {
 
     this.handleEditClick = this.handleEditClick.bind(this);
     this.handleFeaturedImageDelete = this.handleFeaturedImageDelete.bind(this);
+    this.handleSuccessfulEditSubmit = this.handleSuccessfulEditSubmit.bind(
+      this
+    );
+  }
+
+  handleSuccessfulEditSubmit(blog) {
+    this.setState({
+      blogItem: blog,
+      editMode: false
+    });
   }
 
   handleFeaturedImageDelete() {
@@ -69,6 +79,7 @@ export default class BlogDetail extends Component {
             editMode={this.state.editMode}
             blog={this.state.blogItem}
             handleFeaturedImageDelete={this.handleFeaturedImageDelete}
+            handleSuccessfulEditSubmit={this.handleSuccessfulEditSubmit}
           />
         );
       } else {

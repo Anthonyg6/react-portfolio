@@ -14,7 +14,9 @@ export default class BlogForm extends Component {
       title: "",
       blog_status: "",
       content: "",
-      featured_image: ""
+      featured_image: "",
+      apiUrl: "https://anthonygallegos.devcamp.space/portfolio/portfolio_blogs",
+      apiAction: "post"
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -51,7 +53,12 @@ export default class BlogForm extends Component {
       this.setState({
         id: this.props.blog.id,
         title: this.props.blog.title,
-        blog_status: this.props.blog.blog_status
+        blog_status: this.props.blog.blog_status,
+        content: this.props.blog.content,
+        apiUrl: `https://anthonygallegos.devcamp.space/portfolio/portfolio_blogs/${
+          this.props.blog.id
+        }`,
+        apiAction: "patch"
       });
     }
   }
@@ -99,12 +106,12 @@ export default class BlogForm extends Component {
   }
 
   handleFormSubmit(event) {
-    axios
-      .post(
-        "https://anthonygallegos.devcamp.space/portfolio/portfolio_blogs",
-        this.buildForm(),
-        { withCredentials: true }
-      )
+    axios({
+      method: this.state.apiAction,
+      url: this.state.apiUrl,
+      data: this.buildForm(),
+      withCredentials: true
+    })
       .then(response => {
         if (this.state.featured_image) {
           this.featuredImageRef.current.dropzone.removeAllFiles();
@@ -117,7 +124,11 @@ export default class BlogForm extends Component {
           featured_image: ""
         });
 
-        this.props.handleSuccessfulFormSubmit(response.data.portfolio_blog);
+        if (this.props.editMode) {
+          this.props.handleSuccessfulEditSubmit(response.data.portfolio_blog);
+        } else {
+          this.props.handleSuccessfulFormSubmit(response.data.portfolio_blog);
+        }
       })
       .catch(error => {
         console.log("handleFormSubmit", error);
