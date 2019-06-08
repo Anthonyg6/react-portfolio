@@ -3,6 +3,8 @@ import axios from "axios";
 import RichTextEditors from "../forms/rich-text-editors";
 import DropzoneComponent from "react-dropzone-component";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 export default class BlogForm extends Component {
   constructor(props) {
     super(props);
@@ -28,11 +30,13 @@ export default class BlogForm extends Component {
   }
 
   componentWillMount() {
-    this.setState({
-      id: this.props.blog.id,
-      title: this.props.blog.title,
-      blog_status: this.props.blog.blog_status
-    });
+    if (this.state.editMode) {
+      this.setState({
+        id: this.props.blog.id,
+        title: this.props.blog.title,
+        blog_status: this.props.blog.blog_status
+      });
+    }
   }
 
   componentConfig() {
@@ -144,14 +148,26 @@ export default class BlogForm extends Component {
         </div>
 
         <div className="image-uploader one-column">
-          <DropzoneComponent
-            ref={this.featuredImageRef}
-            config={this.componentConfig()}
-            djsConfig={this.djsConfig()}
-            eventHandlers={this.handleFeaturedImage()}
-          >
-            <div className="dz-message">Featured Image</div>
-          </DropzoneComponent>
+          {this.props.editMode && this.props.blog.featured_image_url ? (
+            <div className="dropzone-img-wrapper">
+              <img src={this.props.blog.featured_image_url} />
+
+              <div className="dropzone-link-remove">
+                <a>
+                  <FontAwesomeIcon icon="minus-circle" />
+                </a>
+              </div>
+            </div>
+          ) : (
+            <DropzoneComponent
+              ref={this.featuredImageRef}
+              config={this.componentConfig()}
+              djsConfig={this.djsConfig()}
+              eventHandlers={this.handleFeaturedImage()}
+            >
+              <div className="dz-message">Featured Image</div>
+            </DropzoneComponent>
+          )}
         </div>
 
         <button className="btn">Save</button>
