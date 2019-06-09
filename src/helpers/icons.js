@@ -5,7 +5,10 @@ import {
   faMinusCircle,
   faMinus,
   faCircleNotch,
-  faPlus
+  faPlus,
+  faPaperPlane,
+  faPhone,
+  faMapPin
 } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 
@@ -16,7 +19,10 @@ const Icons = () => {
     faEdit,
     faMinusCircle,
     faCircleNotch,
-    faPlus
+    faPlus,
+    faPaperPlane,
+    faPhone,
+    faMapPin
   );
 };
 
