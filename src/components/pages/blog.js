@@ -25,6 +25,27 @@ export default class Blog extends Component {
     this.handleSuccessfulBlogSubmission = this.handleSuccessfulBlogSubmission.bind(
       this
     );
+
+    this.handleBlogDelete = this.handleBlogDelete.bind(this);
+  }
+
+  handleBlogDelete(blog) {
+    axios
+      .delete(
+        `https://api.devcamp.space/portfolio/portfolio_blogs/${blog.id}`,
+        { withCredentials: true }
+      )
+      .then(response => {
+        this.setState({
+          blogItems: this.state.blogItems.filter(blogItem => {
+            return blog.id !== blogItem.id;
+          })
+        });
+        return response.data;
+      })
+      .catch(error => {
+        console.log("error", error);
+      });
   }
 
   handleSuccessfulBlogSubmission(blog) {
@@ -100,8 +121,23 @@ export default class Blog extends Component {
 
   render() {
     const blogRecord = this.state.blogItems.map(blogItem => {
-      return <BlogItem key={blogItem.id} blogItem={blogItem} />;
+      if (this.props.loggedInStatus === "LOGGED_IN") {
+        return (
+          <div key={blogItem.id} className="admin-wrapper">
+            <BlogItem blogItem={blogItem} />
+            <a
+              className="delete-icon"
+              onClick={() => this.handleBlogDelete(blogItem)}
+            >
+              <FontAwesomeIcon icon="trash-alt" />
+            </a>
+          </div>
+        );
+      } else {
+        return <BlogItem key={blogItem.id} blogItem={blogItem} />;
+      }
     });
+
     return (
       <div className="blog-container-wrapper">
         <BlogModal
