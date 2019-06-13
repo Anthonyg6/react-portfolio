@@ -8,7 +8,9 @@ import {
   faPlus,
   faPaperPlane,
   faPhone,
-  faMapPin
+  faMapPin,
+  faEnvelope,
+  faKey
 } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 
@@ -22,7 +24,9 @@ const Icons = () => {
     faPlus,
     faPaperPlane,
     faPhone,
-    faMapPin
+    faMapPin,
+    faEnvelope,
+    faKey
   );
 };
 

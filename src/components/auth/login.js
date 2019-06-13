@@ -1,52 +1,56 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from "react";
+import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default class Login extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            email:"",
-            password:""
-        };
+    this.state = {
+      email: "",
+      password: ""
+    };
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-    handleChange(event) {
-        this.setState({
-            [event.target.name]: event.target.value
-        });
-    }
-
-    handleSubmit(event) {
-        axios.post("https://api.devcamp.space/sessions",
-        {
-            client: {
-                email: this.state.email,
-                password: this.state.password,
-                errorText: ""
-            }
-        },
-        {withCredentials: true}
-    ).then(response => {
-        if (response.data.status === "created") {
-            this.props.handleSuccessfulAuth()
-        } else {
-            this.setState({
-                errorText: "You have passed in the wrong email and/or password"
-            })
-            this.props.handleUnSucessfulAuth()
-        }
-    }).catch(error => {
-        this.setState({
-            errorText: "Some error has occured"
-        })
-        this.props.handleUnSucessfulAuth()
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
     });
-        event.preventDefault();
-        
-    }
+  }
+
+  handleSubmit(event) {
+    axios
+      .post(
+        "https://api.devcamp.space/sessions",
+        {
+          client: {
+            email: this.state.email,
+            password: this.state.password,
+            errorText: ""
+          }
+        },
+        { withCredentials: true }
+      )
+      .then(response => {
+        if (response.data.status === "created") {
+          this.props.handleSuccessfulAuth();
+        } else {
+          this.setState({
+            errorText: "You have passed in the wrong email and/or password"
+          });
+          this.props.handleUnSucessfulAuth();
+        }
+      })
+      .catch(error => {
+        this.setState({
+          errorText: "An Error as occured please try again!"
+        });
+        this.props.handleUnSucessfulAuth();
+      });
+    event.preventDefault();
+  }
 
   render() {
     return (
@@ -54,23 +58,31 @@ export default class Login extends Component {
         <h1>LOGIN TO ACCESS DASHBOARD</h1>
 
         <div>{this.state.errorText}</div>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} className="auth-form-wrapper">
+          <div className="form-group">
+            <FontAwesomeIcon icon="envelope" />
             <input
-                type="email"
-                name="email"
-                placeholder="Your email goes here!"
-                value={this.state.email}
-                onChange={this.handleChange}
+              type="email"
+              name="email"
+              placeholder="Your email goes here!"
+              value={this.state.email}
+              onChange={this.handleChange}
             />
+          </div>
+          <div className="form-group">
+            <FontAwesomeIcon icon="key" />
             <input
-                type="password"
-                name="password"
-                placeholder="Enter password!"
-                value={this.state.password}
-                onChange={this.handleChange}
+              type="password"
+              name="password"
+              placeholder="Enter password!"
+              value={this.state.password}
+              onChange={this.handleChange}
             />
+          </div>
 
-            <button type="submit">Login</button>
+          <button className="auth-btn" type="submit">
+            Login
+          </button>
         </form>
       </div>
     );
