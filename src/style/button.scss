@@ -1,11 +1,12 @@
 .btn {
-    @include base-btn();
+  @include base-btn();
 }
 
 .form-btn {
-    @include base-btn();
-    background-color: $charcoal;
-    &:hover {
-        background-color: $teal;
-    }
+  @include base-btn();
+  background-color: $charcoal;
+  border-radius: 3px;
+  &:hover {
+    background-color: $teal;
+  }
 }

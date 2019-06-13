@@ -33,10 +33,10 @@
       box-shadow: 0 5px #666;
 
       &:hover {
-        background-color: #03d6b3;
+        background-color: rgb(119, 178, 233);
       }
       &:active {
-        background-color: $dark-teal;
+        background-color: rgb(119, 178, 233);
         box-shadow: 0 5px #666;
         transform: translateY(4px);
       }
