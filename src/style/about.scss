@@ -1,0 +1,10 @@
+.link-to-contact {
+  text-decoration: none;
+  color: $grey;
+  transition: 0.5s ease-in-out;
+  text-decoration: none;
+  font-size: 1.2em;
+  &:hover {
+    color: rgb(119, 178, 233);
+  }
+}
