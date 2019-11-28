@@ -74,9 +74,7 @@ export default class PortfolioForm extends Component {
   handleDeleteImage(ImageType) {
     axios
       .delete(
-        `https://api.devcamp.space/portfolio/delete-portfolio-image/${
-          this.state.id
-        }?image_type=${ImageType}`,
+        `https://api.devcamp.space/portfolio/delete-portfolio-image/${this.state.id}?image_type=${ImageType}`,
         { withCredentials: true }
       )
       .then(response => {
@@ -225,6 +223,7 @@ export default class PortfolioForm extends Component {
             <option value="Search Engine">Search Engine</option>
             <option value="Automotive">Automotive</option>
             <option value="Game">Game</option>
+            <option value="Other">Other</option>
           </select>
         </div>
         <div className="one-column">
